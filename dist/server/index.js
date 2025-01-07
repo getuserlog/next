@@ -1,28 +1,10 @@
-'use strict';
+"use strict";
 
 var USERLOG_BASE = "https://api.getuserlog.com/api";
 var ENDPOINT_VERSION = "/v1";
 var ENDPOINTS = {
-  /**
-   * UserLog Log Endpoint
-   */
   LOG: USERLOG_BASE + ENDPOINT_VERSION + "/log",
-  /**
-   * UserLog Identify Endpoint
-   */
-  IDENTIFY: USERLOG_BASE + ENDPOINT_VERSION + "/identify",
-  /**
-   * UserLog Insight Endpoint
-   */
-  INSIGHT: USERLOG_BASE + ENDPOINT_VERSION + "/insight",
-  /**
-   * UserLog Group Endpoint
-   */
-  GROUP: USERLOG_BASE + ENDPOINT_VERSION + "/group",
-  /**
-   * UserLog Page Endpoint
-   */
-  PAGE: USERLOG_BASE + ENDPOINT_VERSION + "/page"
+  PAGE: USERLOG_BASE + ENDPOINT_VERSION + "/page",
 };
 
 var HTTPResponseError = class extends Error {
@@ -52,7 +34,7 @@ var HTTPResponseError = class extends Error {
    */
   toJSON() {
     return {
-      message: this.message
+      message: this.message,
     };
   }
 };
@@ -61,8 +43,7 @@ function isTimestampInMilliseconds(timestamp) {
   return Math.abs(Date.now() - timestamp) < Math.abs(Date.now() - timestamp * 1e3);
 }
 function toUnixTimestamp(timestamp) {
-  if (!timestamp)
-    return void 0;
+  if (!timestamp) return void 0;
   if (timestamp instanceof Date) {
     timestamp = timestamp.getTime();
   }
@@ -83,11 +64,7 @@ var UserLog = class {
    * @param disableTracking Disable tracking
    * for more information, see: docs.getuserlog.com
    */
-  constructor({
-    api_key,
-    project,
-    disableTracking = false
-  }) {
+  constructor({ api_key, project, disableTracking = false }) {
     this.api_key = api_key;
     this.project = project;
     this.disabled = disableTracking || false;
@@ -133,16 +110,7 @@ var UserLog = class {
   createHeaders() {
     return {
       "Content-Type": "application/json",
-      Authorization: this.createAuthorizationHeader()
-    };
-  }
-  /**
-   * Get insight methods
-   */
-  get insight() {
-    return {
-      track: this.insightTrack.bind(this),
-      increment: this.insightIncrement.bind(this)
+      Authorization: this.createAuthorizationHeader(),
     };
   }
   /**
@@ -151,122 +119,17 @@ var UserLog = class {
    * @returns true when successfully published
    */
   async track(options) {
-    if (this.isTrackingDisabled())
-      return true;
+    if (this.isTrackingDisabled()) return true;
     const headers = this.createHeaders();
     const method = "POST";
     options.timestamp = toUnixTimestamp(options.timestamp);
     const body = JSON.stringify({
       ...options,
-      project: this.getProject()
+      project: this.getProject(),
     });
     const response = await fetch(ENDPOINTS.LOG, { method, body, headers });
     if (!response.ok) {
-      throw new HTTPResponseError(
-        response.status,
-        response.statusText,
-        await response.json()
-      );
-    }
-    return true;
-  }
-  /**
-   * Identify a user
-   * @param options
-   * @returns true when successfully published
-   */
-  async identify(options) {
-    if (this.isTrackingDisabled())
-      return true;
-    const headers = this.createHeaders();
-    const method = "POST";
-    const body = JSON.stringify({
-      ...options,
-      project: this.getProject()
-    });
-    const response = await fetch(ENDPOINTS.IDENTIFY, { method, body, headers });
-    if (!response.ok) {
-      throw new HTTPResponseError(
-        response.status,
-        response.statusText,
-        await response.json()
-      );
-    }
-    return true;
-  }
-  /**
-   * Group a user or update group properties
-   * @param options
-   * @returns true when successfully published
-   */
-  async group(options) {
-    if (this.isTrackingDisabled())
-      return true;
-    const headers = this.createHeaders();
-    const method = "POST";
-    const body = JSON.stringify({
-      ...options,
-      project: this.getProject()
-    });
-    const response = await fetch(ENDPOINTS.GROUP, { method, body, headers });
-    if (!response.ok) {
-      throw new HTTPResponseError(
-        response.status,
-        response.statusText,
-        await response.json()
-      );
-    }
-    return true;
-  }
-  /**
-   * Publish a new insight to UserLog
-   * @param options
-   * @returns true when successfully published
-   */
-  async insightTrack(options) {
-    if (this.isTrackingDisabled())
-      return true;
-    const headers = this.createHeaders();
-    const method = "POST";
-    const body = JSON.stringify({
-      ...options,
-      project: this.getProject()
-    });
-    const response = await fetch(ENDPOINTS.INSIGHT, { method, body, headers });
-    if (!response.ok) {
-      throw new HTTPResponseError(
-        response.status,
-        response.statusText,
-        await response.json()
-      );
-    }
-    return true;
-  }
-  /**
-   * Increment an insight value
-   * @param options
-   * @returns true when successfully published
-   */
-  async insightIncrement(options) {
-    if (this.isTrackingDisabled())
-      return true;
-    const headers = this.createHeaders();
-    const method = "PATCH";
-    const body = JSON.stringify({
-      project: this.getProject(),
-      icon: options.icon,
-      title: options.title,
-      value: {
-        $inc: options.value
-      }
-    });
-    const response = await fetch(ENDPOINTS.INSIGHT, { method, body, headers });
-    if (!response.ok) {
-      throw new HTTPResponseError(
-        response.status,
-        response.statusText,
-        await response.json()
-      );
+      throw new HTTPResponseError(response.status, response.statusText, await response.json());
     }
     return true;
   }
@@ -274,4 +137,3 @@ var UserLog = class {
 
 const _UserLog = UserLog;
 export { _UserLog as UserLog };
-
