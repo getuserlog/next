@@ -1,0 +1,81 @@
+{
+  "name": "@getuserlog/next",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "private": false,
+  "description": "UserLog client for Next applications",
+  "author": "Michael <michael@8byte.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://getuserlog.com"
+  },
+  "homepage": "https://getuserlog.com",
+  "keywords": [
+    "userlog",
+    "next",
+    "logging",
+    "analytics",
+    "insights",
+    "monitoring",
+    "saas"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./server": {
+      "import": "./dist/server/index.js",
+      "require": "./dist/server/index.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/index.d.ts"
+      ],
+      "server": [
+        "dist/server/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch --clean=false",
+    "publish:prod": "npm run build && npm publish",
+    "publish:beta": "npm run build && npm publish --tag beta",
+    "publish:dryrun": "npm run build && npm publish --dry-run"
+  },
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "next": "^11.1.0 || ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0",
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  },
+  "devDependencies": {
+    "@getuserlog/constants": "*",
+    "@getuserlog/hooks": "*",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "next": "^13.5.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "typescript": "^5.2.2",
+    "tsup": "^7.2.0"
+  }
+}
