@@ -1,4 +1,4 @@
-# Userlog for Next.js
+# UserLog for Next.js
 
 ## Installation
 
@@ -165,4 +165,4 @@ For more information about the UserLog API, see: [docs.getuserlog.com](https://d
 
 ## Support
 
-If you have any problems or issues, please contact us at [michael@userlog.com](mailto:michael@userlog.com)
+If you have any problems or issues, please contact us at [michael@8byte.de](mailto:michael@8byte.de)

@@ -1,5 +1,5 @@
 {
-  "name": "@getuserlog/next",
+  "name": "@userlog/next",
   "version": "1.0.0",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -55,8 +55,7 @@
     "publish:beta": "npm run build && npm publish --tag beta",
     "publish:dryrun": "npm run build && npm publish --dry-run"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "next": "^11.1.0 || ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0",
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
