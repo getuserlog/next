@@ -1,6 +1,6 @@
 {
   "name": "@userlog/next",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -55,26 +55,21 @@
     "publish:beta": "npm run build && npm publish --tag beta",
     "publish:dryrun": "npm run build && npm publish --dry-run"
   },
-  "dependencies": {},
   "peerDependencies": {
-    "next": "^11.1.0 || ^12.0.0 || ^13.0.0 || ^14.0.0 || ^15.0.0",
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    "next": ">=11.1.0",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
-    "@getuserlog/constants": "*",
-    "@getuserlog/hooks": "*",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "next": "^13.5.3",
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "typescript": "^5.2.2",
-    "tsup": "^7.2.0"
+    "next": "^13.5.3",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
   }
 }
