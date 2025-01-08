@@ -1,6 +1,6 @@
 {
   "name": "@userlog/next",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -49,7 +49,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsc",
+    "prepare": "npm run build",
     "dev": "tsup --watch --clean=false",
     "publish:prod": "npm run build && npm publish",
     "publish:beta": "npm run build && npm publish --tag beta",
@@ -61,15 +62,17 @@
     "react-dom": ">=16.8.0"
   },
   "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.3",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
-    "next": "^13.5.3",
-    "react": "^18.0.0",
+    "next": "^13.5.8",
+    "react": "^18.3.1",
     "react-dom": "^18.0.0",
     "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.7.2"
   }
 }

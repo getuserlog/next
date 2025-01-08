@@ -85,24 +85,19 @@ import { useUserLog } from "@userlog/next";
 
 export function Component() {
   // Get the hooks
-  const { setUserId, track } = useUserLog();
-
-  // Set the user id when a user logs in
-  setUserId("user@example.com");
-
-  // Track an event
-  track({
-    channel: "payments",
-    event: "New Subscription",
-    user_id: "user@example.com", // optional when set using setUserId
-    icon: "💰",
-    notify: true,
-    tags: {
-      plan: "premium",
-      cycle: "monthly",
-      trial: false,
-    },
-  });
+    const { setUserId, track } = useUserLog();
+    setUserId("user@example.com");
+    track({
+        channel: "payments",
+        event: "New Subscription",
+        icon: "💰",
+        notify: true,
+        tags: {
+            plan: "premium",
+            cycle: "monthly",
+            trial: false,
+        },
+    });
 
   // Your existing component
 }
