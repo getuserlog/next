@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, useCallback } from "react";
 import Script from "next/script";
 
-const CDN_URL = "https://app.getuserlog.com/userlog.js";
+const CDN_URL = "https://cdn.getuserlog.com/userlog.js";
 
 interface UserLogProviderProps {
   project: string;

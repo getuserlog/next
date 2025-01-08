@@ -75,7 +75,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.useUserLog = exports.UserLogProvider = void 0;
 var react_1 = __importStar(require("react"));
 var script_1 = __importDefault(require("next/script"));
-var CDN_URL = "https://app.getuserlog.com/userlog.js";
+var CDN_URL = "https://cdn.getuserlog.com/userlog.js";
 var UserLogContext = (0, react_1.createContext)(undefined);
 /**
  * UserLogProvider Component
