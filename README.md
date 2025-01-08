@@ -117,7 +117,7 @@ You can also track events directly from HTML elements using data attributes:
 ```jsx
 <button
   data-event="New Subscription"
-  data-channel="billing"
+  data-channel="payments"
   data-user-id="user@example.com" // optional (optional when set using setUserId)
   data-icon="💰" // optional
   data-tag-plan="Pro" // optional
@@ -146,8 +146,8 @@ const userlog = new UserLog({
 // Use it in your server-side code
 // Track an event
 await userlog.track({
-  channel: "payments",
   event: "New Subscription",
+  channel: "payments",
   user_id: "user@example.com",
   icon: "💰",
   notify: true,
