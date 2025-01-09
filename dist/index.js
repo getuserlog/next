@@ -1,7 +1,7 @@
 "use strict";
 
-var React = require("react");
-var Script = require("next/script");
+import React from "react";
+import Script from "next/script";
 
 const CDN_URL = "https://cdn.getuserlog.com/userlog.js";
 
