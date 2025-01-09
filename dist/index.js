@@ -3,55 +3,70 @@
 var React = require("react");
 var Script = require("next/script");
 
-function _interopDefault(e) {
-  return e && e.__esModule ? e : { default: e };
-}
+const CDN_URL = "https://cdn.getuserlog.com/userlog.js";
 
-var React__default = /*#__PURE__*/ _interopDefault(React);
-var Script__default = /*#__PURE__*/ _interopDefault(Script);
-
-var CDN_URL = "https://cdn.getuserlog.com/userlog.js";
-var UserLogProvider = ({ project, api_key, children }) => {
-  return /* @__PURE__ */ React__default.default.createElement(
-    React__default.default.Fragment,
+const UserLogProvider = ({ project, api_key, children }) => {
+  return React.createElement(
+    React.Fragment,
     null,
-    /* @__PURE__ */ React__default.default.createElement(Script__default.default, {
+    React.createElement(Script, {
       id: "userlog-script",
       async: true,
       defer: true,
       src: CDN_URL,
     }),
-    /* @__PURE__ */ React__default.default.createElement(Script__default.default, {
+    React.createElement(Script, {
       id: "userlog-init",
       dangerouslySetInnerHTML: {
         __html: `
-            window.userlogq = window.userlogq || [];
-            window.userlog = window.userlog || ((...args) => window.userlogq.push(args));
-            window.userlog('setConfig', '${api_key}', '${project}');
-          `,
+                if (typeof window !== 'undefined') {
+                  window.userlogq = window.userlogq || [];
+                  window.userlog = window.userlog || ((...args) => window.userlogq.push(args));
+                  window.userlog('setConfig', '${api_key}', '${project}');
+                  window.userlog('setDebug', false);
+                }
+              `,
       },
     }),
     children
   );
 };
 
-var setUserId = (userId) => {
-  window.userlog("setUserId", userId);
-};
-var clearUserId = () => {
-  window.userlog("clearUserId");
-};
-var setDebug = (flag = true) => {
-  window.userlog("setDebug", flag);
-};
-var track = (options) => {
-  window.userlog("track", options);
-};
-var identify = (options) => {
-  window.userlog("identify", options);
-};
+const useUserLog = () => {
+  const setDebug = (flag = true) => {
+    if (typeof window !== "undefined" && typeof window.userlog === "function") {
+      window.userlog("setDebug", flag);
+    }
+  };
 
-var useUserLog = () => {
+  const setUserId = (userId) => {
+    if (typeof window !== "undefined" && typeof window.userlog === "function") {
+      window.userlog("setUserId", userId);
+    }
+  };
+
+  const clearUserId = () => {
+    if (typeof window !== "undefined" && typeof window.userlog === "function") {
+      window.userlog("clearUserId");
+    }
+  };
+
+  const track = (options) => {
+    if (typeof window === "undefined" || typeof window.userlog !== "function") {
+      console.error("[UserLog] userlog script is not initialized.");
+      return;
+    }
+    window.userlog("track", options);
+  };
+
+  const identify = (options) => {
+    if (typeof window === "undefined" || typeof window.userlog !== "function") {
+      console.error("[UserLog] userlog script is not initialized.");
+      return;
+    }
+    window.userlog("identify", options);
+  };
+
   return {
     setDebug,
     setUserId,
@@ -60,14 +75,19 @@ var useUserLog = () => {
     identify,
   };
 };
-var SetUserIdServerComponent = ({ userId }) => {
-  return /* @__PURE__ */ React__default.default.createElement(
-    Script__default.default,
-    { type: "text/javascript", strategy: "afterInteractive" },
+
+// SetUserIdServerComponent wird nur auf der Client-Seite gerendert
+const SetUserIdServerComponent = ({ userId }) => {
+  // Verhindert, dass Code auf dem Server ausgeführt wird
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  return React.createElement(
+    Script,
+    { id: "userlog-script", type: "text/javascript", strategy: "afterInteractive" },
     `window.userlog('setUserId', ${userId ? `'${userId}'` : null});`
   );
 };
 
-exports.UserLogProvider = UserLogProvider;
-exports.SetUserIdServerComponent = SetUserIdServerComponent;
-exports.useUserLog = useUserLog;
+export { UserLogProvider, SetUserIdServerComponent, useUserLog };
