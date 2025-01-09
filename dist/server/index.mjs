@@ -1,5 +1,3 @@
-"use strict";
-
 var USERLOG_BASE = "https://api.userlog.com";
 var ENDPOINT_VERSION = "/v1";
 var ENDPOINTS = {
@@ -164,4 +162,4 @@ var UserLog = class {
   }
 };
 
-exports.UserLog = UserLog;
+export { UserLog };

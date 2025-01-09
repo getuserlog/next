@@ -1,6 +1,6 @@
 {
   "name": "@userlog/next",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -28,11 +28,11 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "require": "./dist/index.cjs"
     },
     "./server": {
       "import": "./dist/server/index.js",
-      "require": "./dist/server/index.js"
+      "require": "./dist/server/index.cjs"
     }
   },
   "typesVersions": {
@@ -49,8 +49,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build",
+    "build": "tsup",
     "dev": "tsup --watch --clean=false",
     "publish:prod": "npm run build && npm publish",
     "publish:beta": "npm run build && npm publish --tag beta",

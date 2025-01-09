@@ -1,27 +1,13 @@
-"use strict";
-
-var React = require("react");
-var Script = require("next/script");
-
-function _interopDefault(e) {
-  return e && e.__esModule ? e : { default: e };
-}
-
-var React__default = /*#__PURE__*/ _interopDefault(React);
-var Script__default = /*#__PURE__*/ _interopDefault(Script);
+import React from "react";
+import Script from "next/script";
 
 var CDN_URL = "https://cdn.getuserlog.com/userlog.js";
 var UserLogProvider = ({ project, api_key, children }) => {
-  return /* @__PURE__ */ React__default.default.createElement(
-    React__default.default.Fragment,
+  return /* @__PURE__ */ React.createElement(
+    React.Fragment,
     null,
-    /* @__PURE__ */ React__default.default.createElement(Script__default.default, {
-      id: "userlog-script",
-      async: true,
-      defer: true,
-      src: CDN_URL,
-    }),
-    /* @__PURE__ */ React__default.default.createElement(Script__default.default, {
+    /* @__PURE__ */ React.createElement(Script, { id: "userlog-script", async: true, defer: true, src: CDN_URL }),
+    /* @__PURE__ */ React.createElement(Script, {
       id: "userlog-init",
       dangerouslySetInnerHTML: {
         __html: `
@@ -61,13 +47,11 @@ var useUserLog = () => {
   };
 };
 var SetUserIdServerComponent = ({ userId }) => {
-  return /* @__PURE__ */ React__default.default.createElement(
-    Script__default.default,
+  return /* @__PURE__ */ React.createElement(
+    Script,
     { type: "text/javascript", strategy: "afterInteractive" },
     `window.userlog('setUserId', ${userId ? `'${userId}'` : null});`
   );
 };
 
-exports.UserLogProvider = UserLogProvider;
-exports.SetUserIdServerComponent = SetUserIdServerComponent;
-exports.useUserLog = useUserLog;
+export { UserLogProvider, SetUserIdServerComponent, useUserLog };

@@ -12,7 +12,7 @@ interface IUserLogProviderProps {
 declare const UserLogProvider: React.FC<PropsWithChildren<IUserLogProviderProps>>;
 
 type TagKey = Lowercase<string>;
-/** Tag Type */
+/** Tag Type **/
 type Tags = Record<TagKey, string | number | boolean>;
 /**
  * Options for publishing UserLog events
@@ -20,17 +20,17 @@ type Tags = Record<TagKey, string | number | boolean>;
 interface TrackOptions {
   /**
    * Channel name
-   * example: "registrations"
+   * example: "waitlist"
    */
   channel: string;
   /**
    * Event name
-   * example: "New User"
+   * example: "User Joined"
    */
   event: string;
   /**
    * Event description
-   * example: "user@example.com signed up"
+   * example: "joe@example.com joined waitlist"
    */
   description?: string;
   /**
@@ -41,7 +41,7 @@ interface TrackOptions {
   /**
    * Event icon (emoji)
    * must be a single emoji
-   * example: "🎉"
+   * example: "💰"
    */
   icon?: string;
   /**
@@ -57,6 +57,24 @@ interface TrackOptions {
    * Event timestamp
    */
   timestamp?: number | Date;
+}
+
+/** Properties Type **/
+type IdentifyProperties = Record<TagKey, string | number | boolean>;
+/**
+ * Options for publishing UserLog identify
+ */
+interface IdentifyOptions {
+  /**
+   * User ID
+   * example: "user@example.com"
+   */
+  user_id: string;
+  /**
+   * User properties
+   * example: { username: "michael" }
+   */
+  properties: IdentifyProperties;
 }
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -91,13 +109,14 @@ type ITracker = {
    * Identify user traits
    * @param options
    */
+  identify(options: PartialBy<IdentifyOptions, "user_id">): void;
 };
 
 declare global {
   interface Window {
-    userlogq: [keyof ITracker, ...unknown[]][] | undefined;
-    userlog: (...args: [keyof ITracker, ...unknown[]]) => void;
-    userlogi: boolean;
+    lsq: [keyof ITracker, ...unknown[]][] | undefined;
+    ls: (...args: [keyof ITracker, ...unknown[]]) => void;
+    lsi: boolean;
   }
 }
 
@@ -105,12 +124,12 @@ declare global {
  * UserLog Hook
  * @description
  */
-
-declare function useUserLog(): {
+declare const useUserLog: () => {
   setDebug: (flag?: boolean) => void;
   setUserId: (userId: string) => void;
   clearUserId: () => void;
   track: (options: TrackOptions) => void;
+  identify: (options: PartialBy<IdentifyOptions, "user_id">) => void;
 };
 
 interface ISetUserIdProps {

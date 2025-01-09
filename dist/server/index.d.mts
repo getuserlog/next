@@ -7,17 +7,17 @@ type Tags = Record<TagKey, string | number | boolean>;
 interface TrackOptions {
   /**
    * Channel name
-   * example: "registrations"
+   * example: "waitlist"
    */
   channel: string;
   /**
    * Event name
-   * example: "New User"
+   * example: "User Joined"
    */
   event: string;
   /**
    * Event description
-   * example: "user@example.com signed up"
+   * example: "joe@example.com joined waitlist"
    */
   description?: string;
   /**
@@ -28,7 +28,7 @@ interface TrackOptions {
   /**
    * Event icon (emoji)
    * must be a single emoji
-   * example: "🎉"
+   * example: "💰"
    */
   icon?: string;
   /**
@@ -46,6 +46,24 @@ interface TrackOptions {
   timestamp?: number | Date;
 }
 
+/** Properties Type **/
+type IdentifyProperties = Record<TagKey, string | number | boolean>;
+/**
+ * Options for publishing UserLog identify
+ */
+interface IdentifyOptions {
+  /**
+   * User ID
+   * example: "user@example.com"
+   */
+  user_id: string;
+  /**
+   * User properties
+   * example: { username: "michael" }
+   */
+  properties: IdentifyProperties;
+}
+
 /**
  * UserLog Client
  */
@@ -55,7 +73,7 @@ declare class UserLog {
   private disabled;
   /**
    * Construct a new UserLog instance
-   * @param api_key UserLog API KEY
+   * @param api_key UserLog API api_key
    * @param project UserLog project name
    * @param disableTracking Disable tracking
    * for more information, see: docs.getuserlog.com
@@ -91,13 +109,6 @@ declare class UserLog {
    */
   private createHeaders;
   /**
-   * Get insight methods
-   */
-  get insight(): {
-    track: any;
-    increment: any;
-  };
-  /**
    * Publish a new event to UserLog
    * @param options
    * @returns true when successfully published
@@ -108,6 +119,7 @@ declare class UserLog {
    * @param options
    * @returns true when successfully published
    */
+  identify(options: IdentifyOptions): Promise<boolean>;
 }
 
 export { UserLog };
