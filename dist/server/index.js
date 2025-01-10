@@ -1,6 +1,6 @@
 "use strict";
 
-var USERLOG_BASE = "https://api.userlog.com";
+var USERLOG_BASE = "https://api.getuserlog.com/api";
 var ENDPOINT_VERSION = "/v1";
 var ENDPOINTS = {
   /**
